@@ -12,6 +12,36 @@ class RoomsPage extends StatefulWidget {
 class _RoomsPageState extends State<RoomsPage> {
   final FirestoreService _firestoreService = FirestoreService();
 
+  void _createRoom() async {
+    final roomName = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        final controller = TextEditingController();
+        return AlertDialog(
+          title: const Text('Nova Sala'),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(hintText: 'Nome da sala'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, controller.text.trim()),
+              child: const Text('Criar'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (roomName != null && roomName.isNotEmpty) {
+      await _firestoreService.createRoom(roomName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +83,13 @@ class _RoomsPageState extends State<RoomsPage> {
           );
         },
       ),
+      // Aqui está o FAB
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createRoom,
+        child: const Icon(Icons.add),
+        tooltip: 'Criar nova sala',
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
