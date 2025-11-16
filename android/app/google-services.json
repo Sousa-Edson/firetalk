@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419784321494",
+    "project_id": "firetalk-914bf",
+    "storage_bucket": "firetalk-914bf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419784321494:android:5271f88fc7df2431291c77",
+        "android_client_info": {
+          "package_name": "com.edson.firetalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsmK6WgHtE1-6y_YBGsj6T6PATqHIPkIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
