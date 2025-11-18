@@ -41,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, // permite que a tela suba com o teclado
+      // resizeToAvoidBottomInset: true, // permite que a tela suba com o teclado
       appBar: AppBar(title: Text('Sala: ${widget.roomName}')),
       body: SafeArea(
         child: Column(
@@ -77,9 +77,11 @@ class _ChatPageState extends State<ChatPage> {
                 left: 8,
                 right: 8,
                 bottom:
-                    MediaQuery.of(context).viewInsets.bottom +
-                    MediaQuery.of(context).padding.bottom +
-                    4,
+                    MediaQuery.of(context).viewInsets.bottom > 0
+                        ? MediaQuery.of(context).viewInsets.bottom *
+                            0.0 // sobe só 0% do teclado
+                        : MediaQuery.of(context).padding.bottom +
+                            4, // quando teclado fechado, respeita barra de navegação
                 top: 4,
               ),
               child: Row(
