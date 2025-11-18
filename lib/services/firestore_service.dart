@@ -20,6 +20,10 @@ class FirestoreService {
     }
   }
 
+  Future<void> deleteRoom(String roomName) async {
+    await FirebaseFirestore.instance.collection('rooms').doc(roomName).delete();
+  }
+
   // Mensagens
   Stream<List<Message>> getMessages(String roomName) {
     return _firestore

@@ -42,6 +42,31 @@ class _RoomsPageState extends State<RoomsPage> {
     }
   }
 
+  void _deleteRoom(String roomName) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder:
+          (_) => AlertDialog(
+            title: const Text("Excluir sala"),
+            content: Text("Deseja excluir a sala '$roomName'?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text("Cancelar"),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text("Excluir"),
+              ),
+            ],
+          ),
+    );
+
+    if (confirm == true) {
+      await _firestoreService.deleteRoom(roomName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +92,7 @@ class _RoomsPageState extends State<RoomsPage> {
             itemCount: rooms.length,
             itemBuilder: (context, index) {
               final roomName = rooms[index];
+
               return ListTile(
                 title: Text(roomName),
                 trailing: const Icon(Icons.arrow_forward),
@@ -78,12 +104,16 @@ class _RoomsPageState extends State<RoomsPage> {
                     ),
                   );
                 },
+
+                // ✔ Clique longo para deletar
+                onLongPress: () {
+                  _deleteRoom(roomName);
+                },
               );
             },
           );
         },
       ),
-      // Aqui está o FAB
       floatingActionButton: FloatingActionButton(
         onPressed: _createRoom,
         child: const Icon(Icons.add),
